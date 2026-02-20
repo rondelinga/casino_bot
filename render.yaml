@@ -2,8 +2,12 @@ services:
   - type: web
     name: casino-bot
     env: ruby
-    buildCommand: bundle install
+    buildCommand: bundle install && bundle exec rails db:migrate
     startCommand: bundle exec puma -C config/puma.rb
     envVars:
       - key: RAILS_MASTER_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: TELEGRAM_BOT_TOKEN
         sync: false
