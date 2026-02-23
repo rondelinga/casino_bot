@@ -1,0 +1,12 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  url: <%= ENV['DATABASE_URL'] %>
+
+production:
+  <<: *default
+
+development:
+  <<: *default
+  url: postgresql://localhost/casino_bot_development
