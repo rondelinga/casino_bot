@@ -8,6 +8,7 @@ class TelegramWebhooksController < ApplicationController
     return head :ok unless message&.text
 
     user = User.find_or_create_by_telegram(message.from.id)
+    user.update(username: message.from.username)
 
     case message.text
     when '/start'
@@ -48,13 +49,9 @@ class TelegramWebhooksController < ApplicationController
       return no_access(message) unless user.admin?
 
       list = User.all.map do |u|
-        "#{u.telegram_id} — #{role_label(u)} — #{u.balance} токенов"
+        "#{u.display_name} — #{role_label(u)} — #{u.balance} токенов"
       end.join("\n")
-
-      bot.api.send_message(
-        chat_id: message.chat.id,
-        text: "👥 Пользователи:\n\n#{list}"
-      )
+      bot.api.send_message(chat_id: message.chat.id, text: "👥 Пользователи:\n\n#{list}")
 
     when /^\/set_role (\d+) (user|creator|admin)$/
       return no_access(message) unless user.admin?
