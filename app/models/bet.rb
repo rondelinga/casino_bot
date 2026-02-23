@@ -35,17 +35,20 @@ class Bet < ApplicationRecord
   end
 
   def odds_for(outcome)
+    return outcome.odds.to_f if outcome.odds.present?
+  
     outcome_pool = bet_entries.where(bet_outcome: outcome).sum(:amount).to_f
-    return 1.0 if outcome_pool == 0 || total_pool == 0
+    return nil if outcome_pool == 0 || total_pool == 0
     (total_pool.to_f / outcome_pool).round(2)
   end
-
+  
   def summary
     lines = ["📊 *#{title}*\n"]
     bet_outcomes.each do |outcome|
       pool = bet_entries.where(bet_outcome: outcome).sum(:amount)
       odds = odds_for(outcome)
-      lines << "#{outcome.position}. #{outcome.title} — #{pool} токенов (x#{odds})"
+      odds_label = odds ? "x#{odds}" : "динамический"
+      lines << "#{outcome.position}. #{outcome.title} — #{pool} токенов (#{odds_label})"
     end
     lines << "\n💰 Общий банк: #{total_pool} токенов"
     lines.join("\n")
