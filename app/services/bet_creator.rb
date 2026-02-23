@@ -8,15 +8,15 @@ class BetCreator
 
   def create!
     ActiveRecord::Base.transaction do
-      bet = Bet.create!(title: @title, created_by: @user)
+      predict = Bet.create!(title: @title, created_by: @user)
       @outcomes.each_with_index do |title, i|
-        bet.bet_outcomes.create!(
+        predict.bet_outcomes.create!(
           title:    title,
           position: i + 1,
           odds:     @odds&.dig(i)
         )
       end
-      bet
+      predict
     end
   end
 end

@@ -14,9 +14,9 @@ module Commands
 
         if rest.length < 2
           return @responder.send(
-            "❌ Формат: /create_bet Название|Исход 1|Исход 2\n" \
-            "С коэффициентами: /create_bet Название|Исход 1|Исход 2|2.3|4\n" \
-            "Без коэффициентов — они рассчитаются динамически по ставкам"
+            "❌ Формат: /create_predict Название|Исход 1|Исход 2\n" \
+            "С коэффициентами: /create_predict Название|Исход 1|Исход 2|2.3|4\n" \
+            "Без коэффициентов — они рассчитаются динамически по предсказанием"
           )
         end
 
@@ -35,8 +35,8 @@ module Commands
           return @responder.send("❌ Коэффициенты должны быть числами больше 0\nПример: 1.5, 2.3, 4")
         end
 
-        bet = BetCreator.new(@user, title: title, outcomes: titles, odds: odds).create!
-        @responder.send("✅ Ставка создана! ID: #{bet.id}\n\n#{bet.summary}", parse_mode: 'Markdown')
+        predict = BetCreator.new(@user, title: title, outcomes: titles, odds: odds).create!
+        @responder.send("✅ Предсказание создана! ID: #{predict.id}\n\n#{predict.summary}", parse_mode: 'Markdown')
       end
     end
 end
