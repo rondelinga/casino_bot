@@ -1,5 +1,4 @@
-module Telegram
-  module Commands
+module Commands
     class BaseCommand
       ROLE_LABELS = {
         'user'    => '👤 Игрок',
@@ -23,5 +22,4 @@ module Telegram
         ROLE_LABELS[user.role]
       end
     end
-  end
 end

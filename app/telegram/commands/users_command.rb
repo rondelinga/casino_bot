@@ -1,4 +1,3 @@
-module Telegram
   module Commands
     class UsersCommand < BaseCommand
       def call
@@ -12,4 +11,4 @@ module Telegram
       end
     end
   end
-end
+

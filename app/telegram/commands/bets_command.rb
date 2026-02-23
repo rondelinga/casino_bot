@@ -1,5 +1,4 @@
-module Telegram
-  module Commands
+module Commands
     class BetsCommand < BaseCommand
       def call
         bets = Bet.open
@@ -11,5 +10,4 @@ module Telegram
         end
       end
     end
-  end
 end

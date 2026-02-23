@@ -1,5 +1,4 @@
-module Telegram
-  class BotResponder
+class BotResponder
     def initialize(chat_id)
       @chat_id = chat_id
     end
@@ -15,5 +14,4 @@ module Telegram
     def bot
       @bot ||= ::Telegram::Bot::Client.new(ENV['TELEGRAM_BOT_TOKEN'])
     end
-  end
 end

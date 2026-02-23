@@ -1,5 +1,4 @@
-module Telegram
-  module Commands
+module Commands
     class SetRoleCommand < BaseCommand
       def initialize(message, user, responder, telegram_id, role)
         super(message, user, responder)
@@ -17,5 +16,4 @@ module Telegram
         @responder.send("✅ #{target.display_name} теперь #{role_label(target)}")
       end
     end
-  end
 end

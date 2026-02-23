@@ -1,5 +1,4 @@
-module Telegram
-  module Commands
+module Commands
     class ResolveBetCommand < BaseCommand
       def initialize(message, user, responder, bet_id, position)
         super(message, user, responder)
@@ -20,5 +19,4 @@ module Telegram
         @responder.send("🏆 Победил исход «#{outcome.title}»!\nВыигрыши начислены.")
       end
     end
-  end
 end

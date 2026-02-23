@@ -1,5 +1,4 @@
-module Telegram
-  module Commands
+module Commands
     class CancelBetCommand < BaseCommand
       def initialize(message, user, responder, bet_id)
         super(message, user, responder)
@@ -16,5 +15,4 @@ module Telegram
         @responder.send("❌ Ставка отменена, токены возвращены")
       end
     end
-  end
 end

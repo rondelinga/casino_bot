@@ -1,5 +1,4 @@
-module Telegram
-  module Commands
+module Commands
     class SpinCommand < BaseCommand
       def call
         machine = SlotMachine.new(@user)
@@ -26,5 +25,4 @@ module Telegram
         end
       end
     end
-  end
 end

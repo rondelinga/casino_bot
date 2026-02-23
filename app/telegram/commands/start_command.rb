@@ -1,5 +1,4 @@
-module Telegram
-  module Commands
+module Commands
     class StartCommand < BaseCommand
       def call
         @responder.send(
@@ -10,4 +9,4 @@ module Telegram
       end
     end
   end
-end
+

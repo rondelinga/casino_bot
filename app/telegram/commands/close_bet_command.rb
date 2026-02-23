@@ -1,5 +1,4 @@
-module Telegram
-  module Commands
+module Commands
     class CloseBetCommand < BaseCommand
       def initialize(message, user, responder, bet_id)
         super(message, user, responder)
@@ -16,5 +15,4 @@ module Telegram
         @responder.send("🔒 Приём ставок закрыт\n\n#{bet.summary}", parse_mode: 'Markdown')
       end
     end
-  end
 end

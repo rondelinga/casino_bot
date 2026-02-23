@@ -1,5 +1,4 @@
-module Telegram
-  class CommandRouter
+class CommandRouter
     def initialize(message)
       @message = message
       @responder = BotResponder.new(message.chat.id)
@@ -29,5 +28,5 @@ module Telegram
         Commands::SetRoleCommand.new(@message, @user, @responder, $1, $2).call
       end
     end
-  end
 end
+

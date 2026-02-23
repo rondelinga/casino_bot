@@ -1,5 +1,4 @@
-module Telegram
-  module Commands
+module Commands
     class PlaceBetCommand < BaseCommand
       def initialize(message, user, responder, bet_id, position, amount)
         super(message, user, responder)
@@ -27,5 +26,4 @@ module Telegram
         )
       end
     end
-  end
 end

@@ -6,7 +6,7 @@ class TelegramWebhooksController < ApplicationController
     message = update.message
     return head :ok unless message&.text
 
-    Telegram::CommandRouter.new(message).dispatch
+    CommandRouter.new(message).dispatch
     head :ok
   end
 end
