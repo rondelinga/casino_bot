@@ -40,8 +40,40 @@ class TelegramWebhooksController < ApplicationController
         else
           text = "🎰 Крутим...\n\n#{grid_text}\n\n😔 Нет выигрышных комбинаций\nБаланс: #{result[:balance]}"
         end
-    
+
         bot.api.send_message(chat_id: message.chat.id, text: text)
+      end
+
+    when '/users'
+      return no_access(message) unless user.admin?
+
+      list = User.all.map do |u|
+        "#{u.telegram_id} — #{role_label(u)} — #{u.balance} токенов"
+      end.join("\n")
+
+      bot.api.send_message(
+        chat_id: message.chat.id,
+        text: "👥 Пользователи:\n\n#{list}"
+      )
+
+    when /^\/set_role (\d+) (user|creator|admin)$/
+      return no_access(message) unless user.admin?
+
+      target_telegram_id = $1.to_i
+      new_role = $2
+      target = User.find_by(telegram_id: target_telegram_id)
+
+      if target
+        target.update!(role: new_role)
+        bot.api.send_message(
+          chat_id: message.chat.id,
+          text: "✅ Пользователь #{target_telegram_id} теперь #{role_label(target)}"
+        )
+      else
+        bot.api.send_message(
+          chat_id: message.chat.id,
+          text: "❌ Пользователь #{target_telegram_id} не найден"
+        )
       end
     end
 
@@ -52,5 +84,14 @@ class TelegramWebhooksController < ApplicationController
 
   def bot
     @bot ||= Telegram::Bot::Client.new(ENV['TELEGRAM_BOT_TOKEN'])
+  end
+
+  def no_access(message)
+    bot.api.send_message(chat_id: message.chat.id, text: "⛔ Нет доступа.")
+    head :ok
+  end
+
+  def role_label(user)
+    { 'user' => '👤 Игрок', 'creator' => '🎨 Креатор', 'admin' => '👑 Админ' }[user.role]
   end
 end
