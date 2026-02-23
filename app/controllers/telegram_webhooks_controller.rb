@@ -13,19 +13,19 @@ class TelegramWebhooksController < ApplicationController
     when '/start'
       bot.api.send_message(
         chat_id: message.chat.id,
-        text: "🎰 Добро пожаловать в казино, #{message.from.first_name}!\n\nРоль: #{role_label(user)}\nБаланс: #{user.balance} токенов\n\n/spin — крутить слоты (10 токенов)\n/balance — проверить баланс"
+        text: "🎰 Добро пожаловать в казино, #{message.from.first_name}!\n\nТвой баланс: #{user.balance} токенов\n\n/spin — крутить слоты (10 токенов)\n/balance — проверить баланс"
       )
 
     when '/balance'
       bot.api.send_message(
         chat_id: message.chat.id,
-        text: "💰 Баланс: #{user.balance} токенов\nРоль: #{role_label(user)}"
+        text: "💰 Твой баланс: #{user.balance} токенов"
       )
 
     when '/spin'
       machine = SlotMachine.new(user)
       result = machine.spin!
-
+    
       if result[:error] == :no_tokens
         bot.api.send_message(
           chat_id: message.chat.id,
@@ -33,7 +33,7 @@ class TelegramWebhooksController < ApplicationController
         )
       else
         grid_text = machine.display_grid(result[:grid])
-
+    
         if result[:winnings] > 0
           lines_text = result[:winning_lines].join("\n")
           text = "🎰 Крутим...\n\n#{grid_text}\n\n#{lines_text}\n\n💰 Итого: +#{result[:winnings]} токенов\nБаланс: #{result[:balance]}"

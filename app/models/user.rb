@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   DAILY_TOKENS = 100
 
-  enum role: { user: 0, creator: 1, admin: 2 }
+  enum :role, { regular: 0, creator: 1, admin: 2 }
 
   def give_daily_tokens!
     return if last_daily.present? && last_daily >= Date.today
