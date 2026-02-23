@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_20_205910) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_23_205952) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -18,8 +18,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_20_205910) do
     t.integer "balance"
     t.datetime "created_at", null: false
     t.date "last_daily"
+    t.integer "role", default: 0, null: false
     t.bigint "telegram_id"
     t.datetime "updated_at", null: false
+    t.string "username"
     t.index ["telegram_id"], name: "index_users_on_telegram_id", unique: true
   end
 end

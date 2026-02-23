@@ -3,6 +3,10 @@ class User < ApplicationRecord
 
   enum :role, { regular: 0, creator: 1, admin: 2 }
 
+  def display_name
+    username.present? ? "@#{username}" : telegram_id.to_s
+  end
+
   def give_daily_tokens!
     return if last_daily.present? && last_daily >= Date.today
     update!(balance: balance.to_i + DAILY_TOKENS, last_daily: Date.today)
